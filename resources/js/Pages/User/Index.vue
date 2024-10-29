@@ -45,6 +45,9 @@ defineProps({
                 <td class="p-4 font-bold">
                   Name
                 </td>
+                <td class="p-4 font-bold">
+                  Role
+                </td>
                 <td class="w-10">
                   &nbsp;
                 </td>
@@ -61,6 +64,9 @@ defineProps({
                 </td>
                 <td class="px-4 py-2 align-middle">
                   {{ user.name }}
+                </td>
+                <td class="px-4 py-2 align-middle capitalize">
+                  {{ user.role }}
                 </td>
                 <td class="px-4 py-2 align-middle">
                   <Link

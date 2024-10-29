@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use App\Services\Flasher;
+use Cassandra\Type\UserType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 use Redirect;
@@ -20,20 +24,26 @@ class UserController
 
     public function index(): Response
     {
-        $users = User::paginate(50)->onEachSide(1);
+        Gate::authorize('viewAny', User::class);
+
+        $users = User::paginate(25)->onEachSide(1);
 
         return Inertia::render('User/Index', [
-            'users' => $users->toArray(),
+            'users' => $users,
         ]);
     }
 
     public function create(): Response
     {
+        Gate::authorize('create', User::class);
+
         return Inertia::render('User/Create');
     }
 
     public function store(Request $request): RedirectResponse
     {
+        Gate::authorize('create', User::class);
+
         $user = User::create($request->validate([
             'email' => 'required|email',
             'name' => 'required',
@@ -48,6 +58,8 @@ class UserController
 
     public function edit(User $user): Response
     {
+        Gate::authorize('create', $user);
+
         return Inertia::render('User/Edit', [
             'user' => $user,
         ]);
@@ -55,11 +67,17 @@ class UserController
 
     public function update(Request $request, User $user): RedirectResponse
     {
+        Gate::authorize('create', $user);
+
         $data = $request->validate([
             'email' => 'required|email',
             'name' => 'required',
             'password' => 'nullable|min:8',
             'avatar' => 'nullable|uuid',
+            'role' => [
+                'required',
+                Rule::in(UserRole::cases()),
+            ],
         ]);
 
         if (empty($data['password'])) {
