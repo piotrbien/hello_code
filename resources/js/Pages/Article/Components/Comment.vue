@@ -1,0 +1,58 @@
+<script setup>
+import { computed, ref } from "vue";
+import CommentForm from "@/Pages/Article/Components/CommentForm.vue";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+
+const props = defineProps({
+  comment: {
+    type: Object,
+    required: true,
+  }
+})
+
+const form = useForm({
+  content: props.comment.content,
+})
+
+const isEditing = ref(false);
+
+const canEdit = computed(() => {
+  const user = usePage().props.auth.user;
+
+  return user.id === props.comment.user_id || user.role === 'admin'
+})
+</script>
+
+<template>
+<div v-if="!isEditing" class="flex-row bg-white bg-opacity-10 m-4 p-4 rounded text-white">
+  <div class="flex justify-between italic">
+    <div class="capitalize">
+      {{ comment.author.name }}
+    </div>
+    <div>
+      {{ new Date(comment.created_at).toUTCString() }}
+    </div>
+  </div>
+  <div class="mt-4 text-justify">
+    {{ comment.content }}
+  </div>
+  <div v-if="canEdit">
+    <PrimaryButton @click="isEditing = true">
+      Edit
+    </PrimaryButton>
+  </div>
+</div>
+<div v-else>
+  <form
+    @submit.prevent="form.patch(route('comments.update', [$page.props.article.id, comment.id])); isEditing = false;"
+    class="space-y-6 p-4"
+  >
+    <CommentForm :form="form" />
+  </form>
+</div>
+</template>
+
+<style scoped>
+
+</style>
