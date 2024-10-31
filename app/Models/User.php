@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -19,6 +20,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $remember_token
  * @property string $updated_at
  * @property string $created_at
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Article> $articles
  */
 class User extends Authenticatable
 {
@@ -42,8 +45,19 @@ class User extends Authenticatable
         'role' => UserRole::class,
     ];
 
+    /**
+     * @return bool
+     */
     public function isAdmin(): bool
     {
         return $this->role === UserRole::ADMIN;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class);
     }
 }

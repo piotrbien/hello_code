@@ -1,6 +1,13 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import ArticleShort from "@/Pages/Article/Components/ArticleShort.vue";
+
+defineProps({
+  articles: {
+    type: Object,
+  }
+})
 </script>
 
 <template>
@@ -12,9 +19,9 @@ import { Head } from '@inertiajs/vue3';
     </template>
 
     <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 text-gray-900 dark:text-gray-100">You're logged in!</div>
+      <div class="w-3/4 mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg py-2">
+          <ArticleShort v-for="article in articles.data" :article="article" />
         </div>
       </div>
     </div>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\UserRole;
 use App\Models\User;
 use App\Services\Flasher;
-use Cassandra\Type\UserType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -16,6 +15,9 @@ use Redirect;
 
 class UserController
 {
+    /**
+     * @param \App\Services\Flasher $flasher
+     */
     public function __construct(
         private readonly Flasher $flasher,
     ) {
@@ -67,7 +69,7 @@ class UserController
 
     public function update(Request $request, User $user): RedirectResponse
     {
-        Gate::authorize('create', $user);
+        Gate::authorize('update', $user);
 
         $data = $request->validate([
             'email' => 'required|email',
