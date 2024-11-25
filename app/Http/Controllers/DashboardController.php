@@ -14,7 +14,7 @@ class DashboardController
      */
     public function index(): Response
     {
-        $articles = Article::with(['author', 'comments'])->latest()->paginate(25)->onEachSide(1);
+        $articles = Article::with(['author', 'likedBy'])->latest()->paginate(25)->onEachSide(1);
 
         return Inertia::render('Dashboard', [
             'articles' => $articles,

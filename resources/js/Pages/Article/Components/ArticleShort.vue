@@ -1,5 +1,6 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 defineProps({
   article: {
@@ -26,6 +27,10 @@ defineProps({
   </div>
   <div class="mt-4 text-justify line-clamp-3">
     {{ article.content }}
+  </div>
+  <div class="mt-4 italic">
+    <font-awesome-icon icon="thumbs-up" />
+    {{ article.liked_by.length }} likes
   </div>
 </div>
 </template>

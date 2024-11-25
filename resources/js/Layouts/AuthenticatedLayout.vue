@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import FlashMessages from '@/Components/FlashMessages.vue';
 import Navigation from "@/Components/Navigation.vue";
 

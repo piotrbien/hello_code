@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
     Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
     Route::patch('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+    Route::get('/articles/{article}/toggle-like', [ArticleController::class, 'toggleLike'])->name('articles.toggle-like');
 
     Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::patch('/articles/{article}/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
