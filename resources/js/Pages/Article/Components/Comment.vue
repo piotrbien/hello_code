@@ -1,8 +1,10 @@
 <script setup>
 import { computed, ref } from "vue";
 import CommentForm from "@/Pages/Article/Components/CommentForm.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import LikeButton from "@/Components/LikeButton.vue";
 
 const props = defineProps({
   comment: {
@@ -22,6 +24,10 @@ const canEdit = computed(() => {
 
   return user.id === props.comment.user_id || user.role === 'admin'
 })
+
+const toggleLike = () => {
+  router.get(route('comments.toggle-like', [props.comment.article_id, props.comment.id]));
+}
 </script>
 
 <template>
@@ -30,17 +36,23 @@ const canEdit = computed(() => {
     <div class="capitalize">
       {{ comment.author.name }}
     </div>
-    <div>
+    <div class="flex">
       {{ new Date(comment.created_at).toUTCString() }}
+      <div v-if="canEdit" class="ml-4">
+        <PrimaryButton @click="isEditing = true">
+          <font-awesome-icon icon="pen-to-square" />
+        </PrimaryButton>
+      </div>
     </div>
   </div>
   <div class="mt-4 text-justify">
     {{ comment.content }}
   </div>
-  <div v-if="canEdit">
-    <PrimaryButton @click="isEditing = true">
-      Edit
-    </PrimaryButton>
+  <div class="mt-2">
+    <LikeButton
+      :liked-by="comment.liked_by"
+      @toggled="toggleLike"
+    />
   </div>
 </div>
 <div v-else>

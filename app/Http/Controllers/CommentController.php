@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\Comment;
 use App\Services\Flasher;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Redirect;
 
@@ -52,6 +53,23 @@ class CommentController extends Controller
         ]);
 
         $this->flasher->success('Comment updated successfully!');
+
+        return Redirect::route('articles.show', $article);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Article $article
+     * @param \App\Models\Comment $comment
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function toggleLike(Request $request, Article $article, Comment $comment): RedirectResponse
+    {
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        $comment->likedBy()->toggle($user);
 
         return Redirect::route('articles.show', $article);
     }

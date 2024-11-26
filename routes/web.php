@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::patch('/articles/{article}/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
     Route::delete('/articles/{article}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::get('/articles/{article}/comments/{comment}/toggle-like', [CommentController::class, 'toggleLike'])->name('comments.toggle-like');
 });
 
 require __DIR__.'/auth.php';

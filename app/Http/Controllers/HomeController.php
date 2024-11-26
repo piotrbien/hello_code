@@ -14,7 +14,11 @@ class HomeController
      */
     public function index(): Response
     {
-        $articles = Article::with('author')->where('is_public', true)->latest()->paginate(25)->onEachSide(1);
+        $articles = Article::with('author', 'likedBy')
+            ->where('is_public', true)
+            ->latest()
+            ->paginate(25)
+            ->onEachSide(1);
 
         return Inertia::render('Welcome', [
             'articles' => $articles,

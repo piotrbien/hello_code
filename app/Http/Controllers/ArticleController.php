@@ -70,7 +70,12 @@ class ArticleController extends Controller
     public function show(Article $article): Response
     {
         return Inertia::render('Article/Show', [
-            'article' => $article->load(['author', 'comments.author', 'likedBy']),
+            'article' => $article->load([
+                'author',
+                'comments.author',
+                'comments.likedBy',
+                'likedBy'
+            ]),
         ]);
     }
 
