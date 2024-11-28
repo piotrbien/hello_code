@@ -14,7 +14,8 @@ class HomeController
      */
     public function index(): Response
     {
-        $articles = Article::with('author', 'likedBy')
+        $articles = Article::with('author')
+            ->withCount('likedBy')
             ->where('is_public', true)
             ->latest()
             ->paginate(25)

@@ -24,7 +24,7 @@ const strippedContent = computed(() => {
       {{ article.title }}
     </Link>
   </h3>
-  <div class="flex justify-between italic">
+  <div class="flex flex-wrap justify-between italic">
     <div class="capitalize">
       {{ article.author.name }}
     </div>
@@ -37,7 +37,7 @@ const strippedContent = computed(() => {
   </div>
   <div class="mt-4 italic">
     <font-awesome-icon icon="thumbs-up" />
-    {{ article.liked_by.length }} likes
+    {{ article.liked_by_count }} likes
   </div>
 </div>
 </template>

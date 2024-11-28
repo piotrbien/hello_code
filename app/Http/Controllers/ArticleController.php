@@ -29,7 +29,7 @@ class ArticleController extends Controller
      */
     public function index(): Response
     {
-        $articles = Article::latest()->paginate(25)->onEachSide(1);
+        $articles = Article::withCount('likedBy')->latest()->paginate(25)->onEachSide(1);
 
         return Inertia::render('Article/Index', [
             'articles' => $articles,

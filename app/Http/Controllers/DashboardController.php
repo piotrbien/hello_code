@@ -14,10 +14,13 @@ class DashboardController
      */
     public function index(): Response
     {
-        $articles = Article::with(['author', 'likedBy'])->latest()->paginate(25)->onEachSide(1);
+        $articlesQuery = Article::with(['author'])->withCount('likedBy');
+        $indexArticles = $articlesQuery->latest()->paginate(25)->onEachSide(1);
+        $featuredArticles = $articlesQuery->get()->sortByDesc('liked_by_count')->take(3);
 
         return Inertia::render('Dashboard', [
-            'articles' => $articles,
+            'articles' => $indexArticles,
+            'articles_featured' => $featuredArticles,
         ]);
     }
 }
