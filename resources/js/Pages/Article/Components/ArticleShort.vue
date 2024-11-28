@@ -1,12 +1,19 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { computed } from "vue";
 
-defineProps({
+const props = defineProps({
   article: {
     type: Object,
     required: true,
   }
+})
+
+const strippedContent = computed(() => {
+  let doc = new DOMParser().parseFromString(props.article.content, 'text/html');
+
+  return doc.body.textContent || '';
 })
 </script>
 
@@ -26,7 +33,7 @@ defineProps({
     </div>
   </div>
   <div class="mt-4 text-justify line-clamp-3">
-    {{ article.content }}
+    {{ strippedContent }}
   </div>
   <div class="mt-4 italic">
     <font-awesome-icon icon="thumbs-up" />

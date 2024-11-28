@@ -27,9 +27,7 @@ const toggleLike = () => {
       {{ new Date(article.created_at).toUTCString() }}
     </div>
   </div>
-  <div class="mt-4 text-justify">
-    {{ article.content }}
-  </div>
+  <div class="mt-4 text-justify" v-html="article.content" />
   <div class="mt-4 italic">
     <LikeButton
       :liked-by="article.liked_by"

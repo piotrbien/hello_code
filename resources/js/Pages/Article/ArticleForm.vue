@@ -3,9 +3,8 @@ import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import AvatarUpload from '@/Components/AvatarUpload.vue';
 import Checkbox from "@/Components/Checkbox.vue";
-import Textarea from "@/Components/Textarea.vue";
+import Editor from '@tinymce/tinymce-vue';
 
 defineProps({
   form: {
@@ -33,13 +32,18 @@ defineProps({
 
   <div>
     <InputLabel for="content" value="Content" />
-
-    <Textarea
+    <Editor
       id="content"
+      name="content"
       type="text"
       class="mt-1 block w-full"
       v-model="form.content"
-      required
+      api-key=""
+      :init="{
+        plugins: 'lists link table code help wordcount',
+        skin: 'oxide-dark',
+        content_css: 'dark',
+      }"
     />
 
     <InputError class="mt-2" :message="form.errors.content" />
