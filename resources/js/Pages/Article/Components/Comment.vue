@@ -5,6 +5,7 @@ import { router, useForm, usePage } from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import LikeButton from "@/Components/LikeButton.vue";
+import DangerButton from "@/Components/DangerButton.vue";
 
 const props = defineProps({
   comment: {
@@ -42,6 +43,11 @@ const toggleLike = () => {
         <PrimaryButton @click="isEditing = true">
           <font-awesome-icon icon="pen-to-square" />
         </PrimaryButton>
+      </div>
+      <div v-if="canEdit" class="ml-4">
+        <DangerButton @click="router.delete(route('comments.destroy', [comment.article_id, comment.id]))">
+          <font-awesome-icon icon="trash" />
+        </DangerButton>
       </div>
     </div>
   </div>

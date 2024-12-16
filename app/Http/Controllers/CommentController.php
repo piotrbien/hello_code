@@ -73,4 +73,19 @@ class CommentController extends Controller
 
         return Redirect::route('articles.show', $article);
     }
+
+    /**
+     * @param \App\Models\Article $article
+     * @param \App\Models\Comment $comment
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Article $article, Comment $comment): RedirectResponse
+    {
+        $comment->delete();
+
+        $this->flasher->success('Comment removed successfully!');
+
+        return Redirect::route('articles.show', $article);
+    }
 }
