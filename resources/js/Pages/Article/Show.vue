@@ -1,5 +1,5 @@
 <script setup>
-import {Head, useForm} from '@inertiajs/vue3';
+import {Head, useForm, usePage} from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Article from "@/Pages/Article/Components/Article.vue";
 import Comment from "@/Pages/Article/Components/Comment.vue";
@@ -14,6 +14,8 @@ const props = defineProps({
 const form = useForm({
   content: '',
 });
+
+const user = usePage().props.auth.user;
 </script>
 
 <template>
@@ -36,12 +38,19 @@ const form = useForm({
           </h3>
           <Comment v-for="comment in article.comments" :comment="comment" />
 
-          <form
-            @submit.prevent="form.post(route('comments.store', article.id))"
-            class="space-y-6 p-4"
-          >
-            <CommentForm :form="form" />
-          </form>
+          <div v-if="!user.muted_at">
+            <form
+              @submit.prevent="form.post(route('comments.store', article.id))"
+              class="space-y-6 p-4"
+            >
+              <CommentForm :form="form" />
+            </form>
+          </div>
+          <div v-else>
+            <div class="w-full py-4 mx-auto text-center italic text-gray-500">
+              Your account is muted. You cannot post new content.
+            </div>
+          </div>
         </div>
       </div>
     </div>

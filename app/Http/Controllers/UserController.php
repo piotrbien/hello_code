@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Services\Flasher;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -91,5 +92,22 @@ class UserController
         $this->flasher->success("User [{$user->email}] updated successfully!");
 
         return Redirect::route('users.index');
+    }
+
+    /**
+     * @param \App\Models\User $user
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function toggleMute(User $user): RedirectResponse
+    {
+        $user->muted_at = !$user->muted_at ? Carbon::now() : null;
+        $user->save();
+
+        $state = $user->muted_at ? 'muted' : 'unmuted';
+
+        $this->flasher->success("User [{$user->email}] {$state} successfully!");
+
+        return Redirect::route('users.edit', $user->id);
     }
 }

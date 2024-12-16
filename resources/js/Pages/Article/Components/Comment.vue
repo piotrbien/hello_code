@@ -18,11 +18,10 @@ const form = useForm({
   content: props.comment.content,
 })
 
+const user = usePage().props.auth.user;
 const isEditing = ref(false);
 
 const canEdit = computed(() => {
-  const user = usePage().props.auth.user;
-
   return user.id === props.comment.user_id || user.role === 'admin'
 })
 

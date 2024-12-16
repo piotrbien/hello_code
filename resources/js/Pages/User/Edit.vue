@@ -1,7 +1,9 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import {Head, router, useForm} from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import UserForm from '@/Pages/User/UserForm.vue';
+import { computed } from "vue";
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const props = defineProps({
   user: {
@@ -15,6 +17,10 @@ const form = useForm({
   password: '',
   role: props.user.role,
 });
+
+const toggleMuteButtonText = computed(() => {
+  return props.user.muted_at ? 'Unmute' : 'Mute';
+})
 </script>
 
 <template>
@@ -28,6 +34,10 @@ const form = useForm({
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <PrimaryButton class="my-4" @click="router.patch(route('users.toggleMute', user.id))">
+            {{ toggleMuteButtonText }} User
+          </PrimaryButton>
+
           <form @submit.prevent="form.patch(route('users.update', [user.id]))" class="space-y-6">
             <UserForm :form="form" />
           </form>
