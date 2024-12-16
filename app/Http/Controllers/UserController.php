@@ -110,4 +110,21 @@ class UserController
 
         return Redirect::route('users.edit', $user->id);
     }
+
+    /**
+     * @param \App\Models\User $user
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function toggleBan(User $user): RedirectResponse
+    {
+        $user->banned_at = !$user->banned_at ? Carbon::now() : null;
+        $user->save();
+
+        $state = $user->banned_at ? 'banned' : 'unbanned';
+
+        $this->flasher->success("User [{$user->email}] {$state} successfully!");
+
+        return Redirect::route('users.edit', $user->id);
+    }
 }

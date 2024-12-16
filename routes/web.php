@@ -35,7 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::patch('/users/{user}/toggle-mute', [UserController::class, 'toggleMute'])->name('users.toggleMute');
+    Route::patch('/users/{user}/toggle-mute', [UserController::class, 'toggleMute'])->name('users.toggle-mute');
+    Route::patch('/users/{user}/toggle-ban', [UserController::class, 'toggleBan'])->name('users.toggle-ban');
 
     Route::post('/uploads', [UploadController::class, 'upload'])->name('upload.upload');
 

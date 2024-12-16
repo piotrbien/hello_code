@@ -21,6 +21,10 @@ const form = useForm({
 const toggleMuteButtonText = computed(() => {
   return props.user.muted_at ? 'Unmute' : 'Mute';
 })
+
+const toggleBanButtonText = computed(() => {
+  return props.user.banned_at ? 'Unban' : 'Ban';
+})
 </script>
 
 <template>
@@ -34,8 +38,12 @@ const toggleMuteButtonText = computed(() => {
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-          <PrimaryButton class="my-4" @click="router.patch(route('users.toggleMute', user.id))">
+          <PrimaryButton class="my-4 mx-2" @click="router.patch(route('users.toggle-mute', user.id))">
             {{ toggleMuteButtonText }} User
+          </PrimaryButton>
+
+          <PrimaryButton class="my-4 mx-2" @click="router.patch(route('users.toggle-ban', user.id))">
+            {{ toggleBanButtonText }} User
           </PrimaryButton>
 
           <form @submit.prevent="form.patch(route('users.update', [user.id]))" class="space-y-6">

@@ -25,7 +25,7 @@ function bgColor(type) {
   switch (type) {
     case 'success':
       return 'bg-green-500';
-    case 'error':
+    case 'danger':
       return 'bg-red-500';
     case 'warning':
       return 'bg-yellow-500';

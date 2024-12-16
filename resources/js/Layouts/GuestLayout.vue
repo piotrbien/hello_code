@@ -1,6 +1,7 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
+import FlashMessages from "@/Components/FlashMessages.vue";
 </script>
 
 <template>
@@ -10,6 +11,8 @@ import { Link } from '@inertiajs/vue3';
         <ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
       </Link>
     </div>
+
+    <FlashMessages />
 
     <div
       class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg"

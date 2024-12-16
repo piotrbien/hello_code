@@ -48,6 +48,12 @@ defineProps({
                 <td class="p-4 font-bold">
                   Role
                 </td>
+                <td class="p-4 font-bold">
+                  Muted
+                </td>
+                <td class="p-4 font-bold">
+                  Banned
+                </td>
                 <td class="w-10">
                   &nbsp;
                 </td>
@@ -67,6 +73,12 @@ defineProps({
                 </td>
                 <td class="px-4 py-2 align-middle capitalize">
                   {{ user.role }}
+                </td>
+                <td class="px-4 py-2 align-middle">
+                  {{ user.muted_at ? 'Yes' : 'No' }}
+                </td>
+                <td class="px-4 py-2 align-middle">
+                  {{ user.banned_at ? 'Yes' : 'No' }}
                 </td>
                 <td class="px-4 py-2 align-middle">
                   <Link
